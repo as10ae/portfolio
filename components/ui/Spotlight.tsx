@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 type SpotlightProps = {
   gradientFirst?: string;
@@ -12,6 +12,7 @@ type SpotlightProps = {
   smallWidth?: number;
   duration?: number;
   xOffset?: number;
+  fadeDuration?: number;
 };
 
 export const Spotlight = ({
@@ -24,105 +25,133 @@ export const Spotlight = ({
   smallWidth = 240,
   duration = 7,
   xOffset = 100,
+  fadeDuration = 1,
 }: SpotlightProps = {}) => {
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 1.5,
-      }}
-      className="pointer-events-none absolute inset-0 h-full w-full"
-    >
+    <div className="pointer-events-none absolute inset-0 h-full w-full">
+      {/* Left Spotlights */}
       <motion.div
-        animate={{
-          x: [0, xOffset, 0],
-        }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: fadeDuration }}
         className="absolute top-0 left-0 w-screen h-screen z-40 pointer-events-none"
       >
-        <div
-          style={{
-            transform: `translateY(${translateY}px) rotate(-45deg)`,
-            background: gradientFirst,
-            width: `${width}px`,
-            height: `${height}px`,
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, x: [0, xOffset, 0] }}
+          transition={{
+            x: {
+              duration,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            },
+            opacity: { duration: fadeDuration, delay: 0.1 },
           }}
-          className={`absolute top-0 left-0`}
-        />
+          className="absolute top-0 left-0 w-screen h-screen"
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: fadeDuration, delay: 0.2 }}
+            style={{
+              transform: `translateY(${translateY}px) rotate(-45deg)`,
+              background: gradientFirst,
+              width: `${width}px`,
+              height: `${height}px`,
+            }}
+            className={`absolute top-0 left-0`}
+          />
 
-        <div
-          style={{
-            transform: "rotate(-45deg) translate(5%, -50%)",
-            background: gradientSecond,
-            width: `${smallWidth}px`,
-            height: `${height}px`,
-          }}
-          className={`absolute top-0 left-0 origin-top-left`}
-        />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: fadeDuration, delay: 0.3 }}
+            style={{
+              transform: "rotate(-45deg) translate(5%, -50%)",
+              background: gradientSecond,
+              width: `${smallWidth}px`,
+              height: `${height}px`,
+            }}
+            className={`absolute top-0 left-0 origin-top-left`}
+          />
 
-        <div
-          style={{
-            transform: "rotate(-45deg) translate(-180%, -70%)",
-            background: gradientThird,
-            width: `${smallWidth}px`,
-            height: `${height}px`,
-          }}
-          className={`absolute top-0 left-0 origin-top-left`}
-        />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: fadeDuration, delay: 0.4 }}
+            style={{
+              transform: "rotate(-45deg) translate(-180%, -70%)",
+              background: gradientThird,
+              width: `${smallWidth}px`,
+              height: `${height}px`,
+            }}
+            className={`absolute top-0 left-0 origin-top-left`}
+          />
+        </motion.div>
       </motion.div>
 
+      {/* Right Spotlights */}
       <motion.div
-        animate={{
-          x: [0, -xOffset, 0],
-        }}
-        transition={{
-          duration,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: fadeDuration }}
         className="absolute top-0 right-0 w-screen h-screen z-40 pointer-events-none"
       >
-        <div
-          style={{
-            transform: `translateY(${translateY}px) rotate(45deg)`,
-            background: gradientFirst,
-            width: `${width}px`,
-            height: `${height}px`,
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, x: [0, -xOffset, 0] }}
+          transition={{
+            x: {
+              duration,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            },
+            opacity: { duration: fadeDuration, delay: 0.1 },
           }}
-          className={`absolute top-0 right-0`}
-        />
+          className="absolute top-0 right-0 w-screen h-screen"
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: fadeDuration, delay: 0.2 }}
+            style={{
+              transform: `translateY(${translateY}px) rotate(45deg)`,
+              background: gradientFirst,
+              width: `${width}px`,
+              height: `${height}px`,
+            }}
+            className={`absolute top-0 right-0`}
+          />
 
-        <div
-          style={{
-            transform: "rotate(45deg) translate(-5%, -50%)",
-            background: gradientSecond,
-            width: `${smallWidth}px`,
-            height: `${height}px`,
-          }}
-          className={`absolute top-0 right-0 origin-top-right`}
-        />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: fadeDuration, delay: 0.3 }}
+            style={{
+              transform: "rotate(45deg) translate(-5%, -50%)",
+              background: gradientSecond,
+              width: `${smallWidth}px`,
+              height: `${height}px`,
+            }}
+            className={`absolute top-0 right-0 origin-top-right`}
+          />
 
-        <div
-          style={{
-            transform: "rotate(45deg) translate(180%, -70%)",
-            background: gradientThird,
-            width: `${smallWidth}px`,
-            height: `${height}px`,
-          }}
-          className={`absolute top-0 right-0 origin-top-right`}
-        />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: fadeDuration, delay: 0.4 }}
+            style={{
+              transform: "rotate(45deg) translate(180%, -70%)",
+              background: gradientThird,
+              width: `${smallWidth}px`,
+              height: `${height}px`,
+            }}
+            className={`absolute top-0 right-0 origin-top-right`}
+          />
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
