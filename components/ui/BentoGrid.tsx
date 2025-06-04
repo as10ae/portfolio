@@ -10,7 +10,8 @@ export const BentoGrid = ({
   return (
     <div
       className={cn(
-        "mx-auto grid max-w-7xl grid-cols-1 gap-4 md:auto-rows-[18rem] md:grid-cols-3",
+        // change gap-4 to gap-8, change grid-cols-3 to grid-cols-5, remove md:auto-rows-[18rem], add responsive code
+        "grid grid-cols-1 md:grid-cols-6 lg:grid-cols-5 md:grid-row-7 gap-4 lg:gap-8 mx-auto",
         className
       )}
     >
@@ -23,9 +24,10 @@ export const BentoGridItem = ({
   className,
   title,
   description,
-  header,
-  icon,
   id,
+  imgClassName,
+  titleClassName,
+  spareImg,
 }: {
   className?: string;
   title?: string | React.ReactNode;
@@ -33,17 +35,23 @@ export const BentoGridItem = ({
   header?: React.ReactNode;
   icon?: React.ReactNode;
   id: number;
+  img?: string;
+  imgClassName?: string;
+  titleClassName?: string;
+  spareImg?: string;
 }) => {
   return (
     <div
       className={cn(
-        "group/bento realative rounded-3xl shadow-input row-span-1 flex flex-col justify-between space-y-4 border bg-white p-4 transition duration-200 hover:shadow-xl dark:border-white/[0.2] dark:bg-black dark:shadow-none border-red-500",
+        "group/bento realative rounded-3xl shadow-input row-span-1 flex flex-col justify-between space-y-4 border bg-white p-4 transition duration-200 hover:shadow-xl dark:border-white/[0.2] dark:bg-black dark:shadow-none ",
         className
       )}
+      style={{
+        background: "rgb(4,7,29)",
+        backgroundColor: "gradient...",
+      }}
     >
-      {header}
       <div className="transition duration-200 group-hover/bento:translate-x-2">
-        {icon}
         <div className="mt-2 mb-2 font-sans font-bold text-neutral-600 dark:text-neutral-200">
           {title}
         </div>
