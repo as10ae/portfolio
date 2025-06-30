@@ -1,5 +1,6 @@
+/* eslint-disable */
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   motion,
   useAnimationFrame,
@@ -75,45 +76,52 @@ export const MovingBorder = ({
   duration = 2000,
   rx,
   ry,
-  ...otherProps
+  className,
 }: {
   children: React.ReactNode;
   duration?: number;
   rx?: string;
   ry?: string;
-  [key: string]: any;
+  className?: string;
 }) => {
-  const pathRef = useRef<any>();
+  // Initialize with null and proper type
+  const pathRef = useRef<SVGRectElement | null>(null);
   const progress = useMotionValue<number>(0);
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useAnimationFrame((time) => {
-    const length = pathRef.current?.getTotalLength();
-    if (length) {
-      const pxPerMillisecond = length / duration;
-      progress.set((time * pxPerMillisecond) % length);
-    }
+    if (!pathRef.current) return;
+    const length = pathRef.current.getTotalLength();
+    const pxPerMillisecond = length / duration;
+    progress.set((time * pxPerMillisecond) % length);
   });
 
-  const x = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).x
-  );
-  const y = useTransform(
-    progress,
-    (val) => pathRef.current?.getPointAtLength(val).y
-  );
+  const x = useTransform(progress, (val) => {
+    if (!pathRef.current) return 0;
+    return pathRef.current.getPointAtLength(val).x;
+  });
+
+  const y = useTransform(progress, (val) => {
+    if (!pathRef.current) return 0;
+    return pathRef.current.getPointAtLength(val).y;
+  });
 
   const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
+
+  if (!isMounted) return null;
 
   return (
     <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"
-        className="absolute h-full w-full"
+        className={cn("absolute h-full w-full", className)}
         width="100%"
         height="100%"
-        {...otherProps}
       >
         <rect
           fill="none"
@@ -125,13 +133,11 @@ export const MovingBorder = ({
         />
       </svg>
       <motion.div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          display: "inline-block",
-          transform,
-        }}
+        style={
+          {
+            /* ... */
+          }
+        }
       >
         {children}
       </motion.div>

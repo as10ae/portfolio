@@ -1,8 +1,17 @@
 "use client";
-
 import { FaLocationArrow } from "react-icons/fa6";
 import { projects } from "@/data";
 import { PinContainer } from "./ui/3d-pin";
+import Image from "next/image";
+
+interface Project {
+  id: number;
+  title: string;
+  des: string;
+  img: string;
+  iconLists: string[];
+  link: string;
+}
 
 const RecentProjects = () => {
   return (
@@ -12,7 +21,7 @@ const RecentProjects = () => {
         <span className="text-purple">recent projects</span>
       </h1>
       <div className="flex flex-wrap items-center justify-center p-4 gap-x-24 gap-y-8 mt-10">
-        {projects.map((item) => (
+        {projects.map((item: Project) => (
           <a
             href={item.link}
             key={item.id}
@@ -23,14 +32,16 @@ const RecentProjects = () => {
             <PinContainer title={item.title}>
               <div className="relative flex items-center justify-center sm:w-[570px] w-[80vw] overflow-hidden sm:h-[40vh] h-[30vh] mb-10 pointer-events-none">
                 <div className="relative sm:w-[570px] w-[80vw] h-[300px] lg:rounded-3xl overflow-hidden mb-10 bg-[#13162D]">
-                  <img
+                  <Image
                     src="/bg.png"
                     alt="bgimg"
+                    fill
                     className="absolute inset-0 w-full h-full object-cover"
                   />
-                  <img
+                  <Image
                     src={item.img}
                     alt="cover"
+                    fill
                     className="relative z-10 w-full h-full object-contain"
                   />
                 </div>
@@ -57,9 +68,11 @@ const RecentProjects = () => {
                         transform: `translateX(-${5 * index + 2}px)`,
                       }}
                     >
-                      <img
+                      <Image
                         src={icon}
                         alt="icon"
+                        width={32}
+                        height={32}
                         className="p-2 pointer-events-none"
                       />
                     </div>
